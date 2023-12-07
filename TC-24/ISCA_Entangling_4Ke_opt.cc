@@ -953,13 +953,15 @@ void CACHE::prefetcher_branch_operate(uint64_t ip, uint8_t branch_type, uint64_t
 {
 }
 
+// IMPORTANT: This function needs to be called in the same order as prefetcher_cache_operate,
+// meaning that after calling prefetcher_squash, none of the squashed instructions should call prefetcher_cache_operate.
+// Otherwise, performance may be sub-optimal.
 void CACHE::prefetcher_squash(uint64_t ip, uint64_t instr_id)
 {
   l1i_cpu_id = cpu;
   l1i_current_cycle = current_cycle;
 
   uint64_t line_addr = ip >> LOG2_BLOCK_SIZE;
-
 
   l1i_squash_hist_table(instr_id, line_addr);
   uint32_t last = (l1i_hist_table_head[l1i_cpu_id] + L1I_HIST_TABLE_MASK) % L1I_HIST_TABLE_ENTRIES;
@@ -982,6 +984,8 @@ void CACHE::prefetcher_squash(uint64_t ip, uint64_t instr_id)
   l1i_stats_last_wrong_path = false;
 }
 
+// NOTE: Here metadata_in receives a boolean indicating if the instruction is from wrong_path or not.
+// This information is only used to gather stats.
 uint32_t CACHE::prefetcher_cache_operate(uint64_t addr, uint64_t ip, uint64_t instr_id, uint8_t cache_hit, uint8_t prefetch_hit, uint32_t metadata_in)
 {
   l1i_cpu_id = cpu;
