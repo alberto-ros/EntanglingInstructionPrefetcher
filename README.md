@@ -8,3 +8,6 @@ The IPC-1 folder contains the code submitted to the 1st Instruction Prefetching 
 
 The ISCA-21 folder contains the code of the article accepted at the 48th International Symposium on Computer Architecture. If you use it, please, cite:
  - Alberto Ros and Alexandra Jimborean, "A Cost-Effective Entangling Prefetcher for Instructions", 48th International Symposium on Computer Architecture (ISCA), June 2021.
+
+The TC-24 folder contains the code of the article accepted at IEEE Transaction on Computers. If you use it, please, cite:
+ - Alberto Ros and Alexandra Jimborean, "Wrong-Path-Aware Entangling Instruction Prefetcher", IEEE Transaction on Computers (TC), 2024.
